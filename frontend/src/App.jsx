@@ -14,6 +14,7 @@ import SearchPage from './pages/SearchPage';
 import Index from './pages/Index';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Courses from './pages/Courses';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         </Route>
         <Route path="/user" element={<Index />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/courses" element={<Courses />} />
       </Routes>
       <ToastContainer />
     </>
