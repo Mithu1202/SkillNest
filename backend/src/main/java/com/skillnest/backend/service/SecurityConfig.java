@@ -40,8 +40,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             "/ws/**",
             "/ws/info",
             "/sockjs-node/**",
-            "/uploads/**" // 👈 ADD THIS LINE
+            "/uploads/**",
+            "/api/courses/**"  
         ).permitAll()
+        
         .anyRequest().authenticated()
         .and()
         .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
