@@ -51,22 +51,23 @@ const AboutPage = () => {
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  // Sync form with user data
+  // Sync form with user data or localStorage
   useEffect(() => {
     if (user) {
+      const unsavedForm = JSON.parse(localStorage.getItem('unsavedForm') || '{}');
       setForm({
-        bio: user.bio || '',
-        tagline: user.tagline || '',
-        gender: user.gender || '',
-        country: user.country || '',
-        state: user.state || '',
-        city: user.city || '',
-        role: user.role || '',
-        institution: user.institution || '',
-        language: user.language || '',
-        internship: user.internship || '',
-        fieldOfStudy: user.fieldOfStudy || '',
-        resume: user.resume || '',
+        bio: unsavedForm.bio || user.bio || '',
+        tagline: unsavedForm.tagline || user.tagline || '',
+        gender: unsavedForm.gender || user.gender || '',
+        country: unsavedForm.country || user.country || '',
+        state: unsavedForm.state || user.state || '',
+        city: unsavedForm.city || user.city || '',
+        role: unsavedForm.role || user.role || '',
+        institution: unsavedForm.institution || user.institution || '',
+        language: unsavedForm.language || user.language || '',
+        internship: unsavedForm.internship || user.internship || '',
+        fieldOfStudy: unsavedForm.fieldOfStudy || user.fieldOfStudy || '',
+        resume: unsavedForm.resume || user.resume || '',
       });
     }
   }, [user]);
@@ -76,11 +77,25 @@ const AboutPage = () => {
     if (form.country) {
       const stateList = State.getStatesOfCountry(form.country);
       setStates(stateList || []);
-      setForm(prev => ({ ...prev, state: '', city: '' }));
-      setCities([]);
+      const unsavedForm = JSON.parse(localStorage.getItem('unsavedForm') || '{}');
+      // Only reset state and city if country has changed and no valid state is saved
+      if (!unsavedForm.state || !stateList.some(s => s.isoCode === unsavedForm.state)) {
+        setForm(prev => ({ ...prev, state: '', city: '' }));
+        localStorage.setItem('unsavedForm', JSON.stringify({ ...form, state: '', city: '' }));
+        setCities([]);
+      } else {
+        // Restore state and city from localStorage
+        setForm(prev => ({ ...prev, state: unsavedForm.state || '', city: unsavedForm.city || '' }));
+        if (unsavedForm.state) {
+          const cityList = City.getCitiesOfState(form.country, unsavedForm.state);
+          setCities(cityList || []);
+        }
+      }
     } else {
       setStates([]);
       setCities([]);
+      setForm(prev => ({ ...prev, state: '', city: '' }));
+      localStorage.setItem('unsavedForm', JSON.stringify({ ...form, state: '', city: '' }));
     }
   }, [form.country]);
 
@@ -89,15 +104,28 @@ const AboutPage = () => {
     if (form.state && form.country) {
       const cityList = City.getCitiesOfState(form.country, form.state);
       setCities(cityList || []);
-      setForm(prev => ({ ...prev, city: '' }));
+      const unsavedForm = JSON.parse(localStorage.getItem('unsavedForm') || '{}');
+      // Only reset city if state has changed and no valid city is saved
+      if (!unsavedForm.city || !cityList.some(c => c.name === unsavedForm.city)) {
+        setForm(prev => ({ ...prev, city: '' }));
+        localStorage.setItem('unsavedForm', JSON.stringify({ ...form, city: '' }));
+      } else {
+        setForm(prev => ({ ...prev, city: unsavedForm.city || '' }));
+      }
     } else {
       setCities([]);
+      setForm(prev => ({ ...prev, city: '' }));
+      localStorage.setItem('unsavedForm', JSON.stringify({ ...form, city: '' }));
     }
   }, [form.state, form.country]);
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm(prev => {
+      const updatedForm = { ...prev, [name]: value };
+      localStorage.setItem('unsavedForm', JSON.stringify(updatedForm));
+      return updatedForm;
+    });
   };
 
   const handleFileChange = e => {
@@ -138,20 +166,21 @@ const AboutPage = () => {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('Please log in');
       const userId = user._id || user.id;
-  
-      // ✅ Merge current user object with form data to avoid overwriting
+
       const mergedPayload = { ...user, ...form };
-  
+
       await API.put(`/auth/users/${userId}`, mergedPayload, {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       const updatedUser = await fetchUserData(userId, token);
       setForm(prev => ({
         ...prev,
-        ...updatedUser // update form to reflect all server data
+        ...updatedUser
       }));
-  
+
+      localStorage.removeItem('unsavedForm');
+
       toast.success('Profile updated successfully!');
       setIsEditing(false);
       setEditSection(null);
@@ -163,7 +192,6 @@ const AboutPage = () => {
       setIsLoading(false);
     }
   };
-  
 
   const handleFileUpload = async () => {
     if (!resumeFile) {
@@ -189,6 +217,7 @@ const AboutPage = () => {
         ...prev,
         resume: updatedUser.resume
       }));
+      localStorage.setItem('unsavedForm', JSON.stringify({ ...form, resume: updatedUser.resume }));
       setResumeFile(null);
       toast.success('Resume uploaded successfully!');
     } catch (error) {
@@ -211,6 +240,7 @@ const AboutPage = () => {
     setEditSection(null);
     setResumeFile(null);
     setError(null);
+    localStorage.removeItem('unsavedForm');
     if (user) {
       setForm({
         bio: user.bio || '',
@@ -310,7 +340,7 @@ const AboutPage = () => {
           {form.resume ? (
             <div className="flex items-center gap-4">
               <a 
-                href={form.resume} 
+                href={`http://localhost:8000${form.resume}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="text-blue-600 hover:underline"
