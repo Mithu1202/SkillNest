@@ -78,10 +78,21 @@ const Post = ({
     }
   };
 
+  // Add this function to check for violation words
+  const containsViolation = (text) => {
+    const violations = ["fuck", "bitch"];
+    const lower = text.toLowerCase();
+    return violations.some((word) => lower.includes(word));
+  };
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentInput.trim()) return toast.error("Comment cannot be empty");
-
+    if (containsViolation(commentInput)) {
+      return toast.error(
+        "Violation content detected. Only normal, good comments are allowed."
+      );
+    }
     try {
       const { data } = await API.post(
         `/auth/posts/${post.id}/comment?userId=${
@@ -100,7 +111,11 @@ const Post = ({
     e.preventDefault();
     if (!editCommentContent.trim())
       return toast.error("Comment cannot be empty");
-
+    if (containsViolation(editCommentContent)) {
+      return toast.error(
+        "Violation content detected. Only normal, good comments are allowed."
+      );
+    }
     try {
       const { data } = await API.post(
         `/auth/posts/comment/${commentId}/edit?userId=${
@@ -280,7 +295,9 @@ const Post = ({
               aspectRatio: "16 / 9",
               maxHeight: isPrimary ? "500px" : isGrid ? "200px" : "400px",
             }}
-            onError={() => console.error(`Failed to load video from ${fullUrl}`)}
+            onError={() =>
+              console.error(`Failed to load video from ${fullUrl}`)
+            }
           />
         ) : (
           <div className="flex items-center justify-center h-64 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -437,9 +454,11 @@ const Post = ({
                         : "grid-cols-1 md:grid-cols-2"
                     }`}
                   >
-                    {visualMediaUrls.slice(1).map((url, idx) =>
-                      renderMedia(url, idx + 1, { isGrid: true })
-                    )}
+                    {visualMediaUrls
+                      .slice(1)
+                      .map((url, idx) =>
+                        renderMedia(url, idx + 1, { isGrid: true })
+                      )}
                   </div>
                 )}
               </>
