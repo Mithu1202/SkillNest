@@ -16,7 +16,15 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Courses from './pages/Courses';
 
+function getCurrentUserId() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user?.id;
+}
+
 function App() {
+
+  const currentUserId = getCurrentUserId();
+  
   return (
     <>
       <Routes>
@@ -30,7 +38,7 @@ function App() {
           <Route path="skills" element={<SkillsSection />} />
           <Route path="documents" element={<DocumentsSection />} />
           <Route path="showcases" element={<ShowcasesSection />} />
-          <Route path="recommendations" element={<RecommendationsSection />} />
+          <Route path="recommendations" element={<RecommendationsSection userId={currentUserId} />} />
           <Route path="posts" element={<PostsSection />} />
         </Route>
         <Route path="/user" element={<Index />} />
