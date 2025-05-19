@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API from '../../api/axios';
 import { toast } from 'react-toastify';
 import { Bookmark, Info } from 'lucide-react';
+import avatar from '../../assets/avatar.png';
 
 const UserProfile = ({ username, points }) => {
   const [user, setUser] = useState(null);
@@ -50,7 +51,7 @@ const UserProfile = ({ username, points }) => {
         {/* Avatar */}
         <div className="mb-2">
           <img
-            src={user.profileImage || '/assets/avatar.png'}
+            src={user.profileImage || avatar}
             alt={`${user.name || 'User'}'s profile`}
             className="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover"
           />

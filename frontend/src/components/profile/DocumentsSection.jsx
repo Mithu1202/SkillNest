@@ -174,7 +174,7 @@ const DocumentsPage = () => {
       return;
     }
     try {
-      window.open(`http://localhost:8000${fileUrl}`, '_blank');
+      window.open(`http://localhost:8080${fileUrl}`, '_blank');
     } catch (err) {
       toast.error(`Failed to view document: ${err.message}`);
       console.error('View error:', err);
@@ -187,7 +187,7 @@ const DocumentsPage = () => {
       toast.error('No URL to copy');
       return;
     }
-    navigator.clipboard.writeText(`http://localhost:8000${text}`);
+    navigator.clipboard.writeText(`http://localhost:8080${text}`);
     toast.success('Link copied to clipboard');
   };
 

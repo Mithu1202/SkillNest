@@ -9,6 +9,8 @@ import {
 import { toast } from "react-toastify";
 import API from "../../api/axios";
 import { motion } from "framer-motion";
+import avatar from "../../assets/avatar.png";
+import fallbackImage from "../../assets/fallback-image.png"; // Fallback image for media
 
 const Post = ({
   user,
@@ -219,7 +221,7 @@ const Post = ({
     const ext = getFileExtension(url);
 
     // Prepend base URL to relative paths
-    const baseUrl = "http://localhost:8000";
+    const baseUrl = "http://localhost:8080";
     const fullUrl = url.startsWith("http") ? url : `${baseUrl}${url}`;
 
     // Animation variants for subtle hover effect
@@ -284,7 +286,7 @@ const Post = ({
               aspectRatio: "16 / 9",
               maxHeight: isPrimary ? "500px" : isGrid ? "200px" : "400px",
             }}
-            onError={(e) => (e.target.src = "/assets/fallback-image.png")}
+            onError={(e) => (e.target.src = fallbackImage)}
           />
         ) : ["mp4", "webm", "mov"].includes(ext) ? (
           <video
@@ -324,7 +326,7 @@ const Post = ({
         <div className="flex justify-between items-center">
           <div className="flex gap-3 items-center">
             <img
-              src={postUser.profileImage || "/assets/avatar.png"}
+              src={postUser.profileImage || avatar}
               alt={`${postUser.name || "User"} profile`}
               className="w-12 h-12 rounded-full object-cover border border-gray-200"
             />
@@ -506,7 +508,7 @@ const Post = ({
               comments.map((comment) => (
                 <div key={comment.id} className="flex gap-3 mb-3">
                   <img
-                    src={comment.user?.profileImage || "/assets/avatar.png"}
+                    src={comment.user?.profileImage || avatar}
                     alt="User"
                     className="w-8 h-8 rounded-full object-cover"
                   />
@@ -579,7 +581,7 @@ const Post = ({
       )}
       <section className="border-t border-gray-100 px-4 py-3 flex items-center gap-3">
         <img
-          src={user.profileImage || "/assets/avatar.png"}
+          src={user.profileImage || avatar}
           alt={`${user.name || "User"} profile`}
           className="w-10 h-10 rounded-full object-cover"
         />

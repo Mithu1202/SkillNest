@@ -205,7 +205,7 @@ const ShowcasesPage = () => {
       toast.error("No URL to copy");
       return;
     }
-    navigator.clipboard.writeText(`http://localhost:8000${text}`);
+    navigator.clipboard.writeText(`http://localhost:8080${text}`);
     toast.success("Link copied to clipboard");
   };
 
@@ -303,7 +303,7 @@ const ShowcasesPage = () => {
 
   const handleViewFile = (filePath) => {
     const fileName = filePath.split("/").pop();
-    const fullUrl = `http://localhost:8000/api/auth/users/${userId}/showcases/view/${fileName}`;
+    const fullUrl = `http://localhost:8080/api/auth/users/${userId}/showcases/view/${fileName}`;
     setSelectedFileUrl(fullUrl);
     setViewFileModal(true);
   };
@@ -745,7 +745,7 @@ const ShowcasesPage = () => {
                           <div className="flex items-center">
                             {existingFilePath.match(/\.(jpeg|jpg|png)$/i) ? (
                               <img
-                                src={`http://localhost:8000${existingFilePath}`}
+                                src={`http://localhost:8080${existingFilePath}`}
                                 alt="Current file"
                                 className="w-12 h-12 object-cover rounded mr-2"
                                 onError={(e) =>
