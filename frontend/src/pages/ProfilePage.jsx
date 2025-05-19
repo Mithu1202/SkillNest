@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import API from '../api/axios';
+import avatar from '../assets/avatar.png';
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState(null);
@@ -152,7 +153,7 @@ const ProfilePage = () => {
             <div className="p-6 relative">
               <div className="absolute top-[-40px] left-6">
                 <div className="relative">
-                  <img src="/assets/avatar.png" alt="avatar" className="w-24 h-24 rounded-full border-4 border-white shadow-lg" />
+                  <img src="../assets/avatar.png" alt="avatar" className="w-24 h-24 rounded-full border-4 border-white shadow-lg" />
                   <div className="absolute bottom-0 right-0 bg-green-600 w-6 h-6 rounded-full border-2 border-white flex items-center justify-center text-white text-sm font-bold cursor-pointer">+</div>
                 </div>
               </div>
