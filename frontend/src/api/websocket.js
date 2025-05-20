@@ -10,7 +10,7 @@ export const connectWebSocket = (userId, onMessageReceived) => {
     return;
   }
 
-  const socket = new SockJS('http://localhost:8000/chat');
+  const socket = new SockJS('http://localhost:8080/chat');
   stompClient = Stomp.over(socket);
 
   stompClient.connect({}, () => {

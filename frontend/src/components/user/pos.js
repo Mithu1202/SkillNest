@@ -9,6 +9,7 @@ import {
 import { toast } from 'react-toastify';
 import API from '../../api/axios';
 import { useChat } from '../../context/ChatContext'; // Import the chat context
+import avatar from '../../assets/avatar.png';
 
 const Post = ({ user, post, isFollowing, updateFollowingState }) => {
   const {
@@ -105,7 +106,7 @@ const Post = ({ user, post, isFollowing, updateFollowingState }) => {
         <div className="flex justify-between items-start">
           <div className="flex gap-3">
             <img
-              src={postUser.profileImage || '/assets/avatar.png'}
+              src={postUser.profileImage || avatar}
               alt={`${postUser.name || 'User'} profile`}
               className="w-10 h-10 rounded-full object-cover"
             />
@@ -195,7 +196,7 @@ const Post = ({ user, post, isFollowing, updateFollowingState }) => {
 
       <section className="border-t px-4 py-3 flex gap-2">
         <img
-          src={user.profileImage || '/assets/avatar.png'}
+          src={user.profileImage || avatar}
           alt={`${user.name || 'User'} profile`}
           className="w-10 h-10 rounded-full object-cover"
         />

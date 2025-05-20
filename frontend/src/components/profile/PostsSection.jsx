@@ -102,7 +102,7 @@ const PostsPage = () => {
     const ext = getFileExtension(url);
 
     // Prepend base URL to relative paths
-    const baseUrl = 'http://localhost:8000';
+    const baseUrl = 'http://localhost:8080';
     const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
 
     console.log(`Rendering media with URL: ${fullUrl}`);
@@ -163,7 +163,7 @@ const PostsPage = () => {
             src={fullUrl}
             alt={`Post media ${idx + 1}`}
             className="w-full h-full object-cover object-center"
-            onError={(e) => (e.target.src = '/assets/fallback-image.png')}
+            onError={(e) => (e.target.src = fallbackImage)}
           />
         ) : ['mp4', 'webm', 'mov'].includes(ext) ? (
           <div className="relative flex flex-col items-center justify-center h-full p-4 text-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800 transition-colors">

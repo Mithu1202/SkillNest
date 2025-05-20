@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx'; // ✅ Optional: for cleaner class handling (install with `npm i clsx`)
+import avatar from '../../assets/avatar.png'; // Default avatar image
 
 const UserAvatar = ({
   initials,
@@ -38,7 +39,7 @@ const UserAvatar = ({
           )}
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = '/assets/avatar.png';
+            e.target.src = avatar;
           }}
         />
       ) : (

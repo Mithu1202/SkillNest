@@ -5,6 +5,7 @@ import SockJS from 'sockjs-client';
 import API from '../../api/axios';
 import { toast } from 'react-toastify';
 import { Send, X, Trash2, Edit2 } from 'lucide-react';
+import avatar from '../../assets/avatar.png';
 
 const Chat = ({ currentUserId, onClose }) => {
     const [messages, setMessages] = useState([]);
@@ -21,7 +22,7 @@ const Chat = ({ currentUserId, onClose }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const socket = new SockJS('http://localhost:8000/chat');
+        const socket = new SockJS('http://localhost:8080/chat');
         const client = Stomp.over(socket);
 
         client.connect({}, () => {
@@ -321,7 +322,7 @@ const Chat = ({ currentUserId, onClose }) => {
                             onClick={() => setSelectedUser(user)}
                         >
                             <img
-                                src={user.profileImage || '/assets/avatar.png'}
+                                src={user.profileImage || avatar}
                                 alt={user.name}
                                 className="w-10 h-10 rounded-full object-cover"
                             />
@@ -340,7 +341,7 @@ const Chat = ({ currentUserId, onClose }) => {
                         <>
                             <div className="p-4 border-b border-gray-200 flex items-center gap-3">
                                 <img
-                                    src={selectedUser.profileImage || '/assets/avatar.png'}
+                                    src={selectedUser.profileImage || avatar}
                                     alt={selectedUser.name}
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
