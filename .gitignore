@@ -1,1 +1,11 @@
 backend/src/main/resources/application.properties
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+frontend/src/components/profile/env/Lib/site-packages*
+
+frontend/src/components/profile/env/pyvenv.cfg
+frontend/src/components/profile/env*
+=======
+>>>>>>> 68e229007f4aeceade6960f7fd223f50f0b6e40d
+>>>>>>> Stashed changes
