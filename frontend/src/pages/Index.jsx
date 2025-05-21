@@ -71,8 +71,9 @@ const Index = () => {
       if (!token) return;
 
       const config = { headers: { Authorization: `Bearer ${token}` } };
+      console.log("===============================>",JSON.parse(localStorage.getItem("user"))["id"])
       const { data } = await API.get(
-        `/auth/posts?page=${pageNum}&limit=${postsPerPage}`,
+        `/auth/posts?page=${pageNum}&limit=${postsPerPage}&UserId=${JSON.parse(localStorage.getItem("user"))["id"]}`,
         config
       );
 
