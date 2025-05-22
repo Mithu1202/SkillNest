@@ -216,7 +216,7 @@ const Post = ({
         transition: { duration: 0.2, ease: "easeOut" },
       },
     };
-
+    //lll
     return (
       <motion.div
         key={fullUrl}
@@ -280,7 +280,9 @@ const Post = ({
               aspectRatio: "16 / 9",
               maxHeight: isPrimary ? "500px" : isGrid ? "200px" : "400px",
             }}
-            onError={() => console.error(`Failed to load video from ${fullUrl}`)}
+            onError={() =>
+              console.error(`Failed to load video from ${fullUrl}`)
+            }
           />
         ) : (
           <div className="flex items-center justify-center h-64 p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -437,9 +439,11 @@ const Post = ({
                         : "grid-cols-1 md:grid-cols-2"
                     }`}
                   >
-                    {visualMediaUrls.slice(1).map((url, idx) =>
-                      renderMedia(url, idx + 1, { isGrid: true })
-                    )}
+                    {visualMediaUrls
+                      .slice(1)
+                      .map((url, idx) =>
+                        renderMedia(url, idx + 1, { isGrid: true })
+                      )}
                   </div>
                 )}
               </>
