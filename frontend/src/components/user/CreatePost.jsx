@@ -173,7 +173,7 @@ const CreatePost = ({ avatarInitials }) => {
               <FileText size={18} />
               <span>Post</span>
             </button>
-            <button
+            {/* <button
               type="button"
               className="flex items-center gap-2 text-orange-600 px-4 py-1 rounded-md hover:bg-orange-50 flex-1 justify-center min-w-[120px]"
             >
@@ -186,7 +186,7 @@ const CreatePost = ({ avatarInitials }) => {
             >
               <Calendar size={18} />
               <span>Event</span>
-            </button>
+            </button> */}
           </div>
         </>
       ) : (
@@ -200,7 +200,7 @@ const CreatePost = ({ avatarInitials }) => {
               <FileText size={18} />
               <span>Post</span>
             </button>
-            <button
+            {/* <button
               type="button"
               className="flex items-center gap-2 text-orange-600 px-4 py-1 rounded-md hover:bg-orange-50 flex-1 justify-center min-w-[120px]"
             >
@@ -213,7 +213,7 @@ const CreatePost = ({ avatarInitials }) => {
             >
               <Calendar size={18} />
               <span>Event</span>
-            </button>
+            </button> */}
           </div>
           <p className="text-gray-700 mb-2">Post Title</p>
           <input

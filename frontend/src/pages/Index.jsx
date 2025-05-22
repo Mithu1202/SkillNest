@@ -205,8 +205,8 @@ const Index = () => {
                 <div className="h-10 bg-gray-200 rounded" />
               </div>
             )}
-            <FeedSettings />
-            <NetworksFilter />
+            {/* <FeedSettings /> */}
+            {/* <NetworksFilter /> */}
             <div className="space-y-6">
               {loading && page === 1 ? (
                 renderSkeleton()

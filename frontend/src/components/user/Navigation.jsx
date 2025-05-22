@@ -179,9 +179,9 @@ const Navigation = () => {
 
           <Notification user={user} />
 
-          <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600 hover:text-blue-600">
+          {/* <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600 hover:text-blue-600">
             <Settings size={20} />
-          </button>
+          </button> */}
 
           <button
             onClick={handleLogout}
