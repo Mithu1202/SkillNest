@@ -24,6 +24,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+
+        // ✅✅✅ Skip JWT check for /api/courses public APIs
+        if (path.startsWith("/api/courses")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         System.out.println("🔍 Incoming Auth Header: " + authHeader);
 

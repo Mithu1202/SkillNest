@@ -78,10 +78,21 @@ const Post = ({
     }
   };
 
+  // Add this function to check for violation words
+  const containsViolation = (text) => {
+    const violations = ["fuck", "bitch"];
+    const lower = text.toLowerCase();
+    return violations.some((word) => lower.includes(word));
+  };
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentInput.trim()) return toast.error("Comment cannot be empty");
-
+    if (containsViolation(commentInput)) {
+      return toast.error(
+        "Violation content detected. Only normal, good comments are allowed."
+      );
+    }
     try {
       const { data } = await API.post(
         `/auth/posts/${post.id}/comment?userId=${
@@ -100,7 +111,11 @@ const Post = ({
     e.preventDefault();
     if (!editCommentContent.trim())
       return toast.error("Comment cannot be empty");
-
+    if (containsViolation(editCommentContent)) {
+      return toast.error(
+        "Violation content detected. Only normal, good comments are allowed."
+      );
+    }
     try {
       const { data } = await API.post(
         `/auth/posts/comment/${commentId}/edit?userId=${
