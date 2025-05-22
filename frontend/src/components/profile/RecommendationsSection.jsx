@@ -1,25 +1,37 @@
 import { Link } from 'react-router-dom';
 
 const RecommendationsPage = () => {
+
+  const userProfile = {
+  expertise: ['Machine Learning', 'Natural Language Processing'],
+  education: 'PhD in Computer Science',
+  interests: ['AI Ethics', 'Reinforcement Learning']
+};
+
   return (
-    <div className="bg-white p-6 shadow rounded-xl">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold text-blue-700">Recommendations</h3>
-        <button className="text-sm text-blue-600 hover:underline">Change Title</button>
-      </div>
-      <p className="text-sm text-gray-600 mb-6">
-        This section displays recommendations or compliments you have received.
-      </p>
-      <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 text-sm">
-        📧 Request a Recommendation
-      </button>
-      <p className="text-sm text-gray-500 mt-6">No Recommendations Received</p>
-      <div className="mt-6">
-        <Link to="/profile" className="text-blue-600 hover:underline">
-          ← Back to Profile
-        </Link>
-      </div>
-    </div>
+    <div className="mt-10">
+  <h4 className="font-bold text-lg text-gray-800 mb-4">Recommended Google Searches:</h4>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+    {[
+      `Latest research in ${userProfile.expertise[0]}`,
+      `Top conferences for ${userProfile.expertise[1]}`,
+      `${userProfile.education} opportunities`,
+      `How to publish in ${userProfile.interests[0]}`,
+      `Tutorial on ${userProfile.interests[1]}`
+    ].map((query, idx) => (
+      <a
+        key={idx}
+        href={`https://www.google.com/search?q=${encodeURIComponent(query)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-gray-100 hover:bg-blue-50 border rounded-lg p-3 text-sm text-blue-700 hover:underline"
+      >
+        🔍 {query}
+      </a>
+    ))}
+  </div>
+</div>
+
   );
 };
 
